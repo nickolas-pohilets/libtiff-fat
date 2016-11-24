@@ -64,7 +64,7 @@ $(libtiff) :  $(libtiffmakefile)
 	cd $(abspath $(@D)/..) ; \
 	$(MAKE) -sj8 && $(MAKE) install
 
-$(TIFF_SRC)/%/Makefile : $(libtiffconfig)
+$(TIFF_SRC)/%/Makefile : $(libtiffconfig) libjpeg
 	export SDKROOT="$(call get_sdk, $*)" ; \
 	export CFLAGS="-Qunused-arguments -arch $(call get_arch, $*) -pipe -no-cpp-precomp -isysroot $$SDKROOT $(call get_min_version, $*) -O2 -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
@@ -92,7 +92,6 @@ $(PNG_SRC)/%/Makefile : $(libpngconfig)
 	export CFLAGS="-Qunused-arguments -arch $(call get_arch, $*) -pipe -no-cpp-precomp -isysroot $$SDKROOT $(call get_min_version, $*) -O2 -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
 	export CXXFLAGS="$$CFLAGS -Wno-deprecated-register"; \
-	echo $$CFLAGS; \
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
 	../configure --host=$(call get_host_name, $*) --enable-shared=no --prefix=`pwd`
