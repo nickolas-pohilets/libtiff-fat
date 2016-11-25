@@ -64,7 +64,7 @@ $(libtiff) :  $(libtiffmakefile)
 	cd $(abspath $(@D)/..) ; \
 	$(MAKE) -sj8 && $(MAKE) install
 
-$(TIFF_SRC)/%/Makefile : $(libtiffconfig) libjpeg
+$(TIFF_SRC)/%/Makefile : $(libtiffconfig) $(libjpegfat)
 	export SDKROOT="$(call get_sdk, $*)" ; \
 	export CFLAGS="-Qunused-arguments -arch $(call get_arch, $*) -pipe -no-cpp-precomp -isysroot $$SDKROOT $(call get_min_version, $*) -O2 -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
